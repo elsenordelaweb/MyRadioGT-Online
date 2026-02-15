@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyRadioGT Online - Sonamos tu música</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #7C3AED;
+            --secondary: #10B981;
+            --dark: #1F2937;
+            --light: #F9FAFB;
+            --gray: #6B7280;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 20%);
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(31, 41, 55, 0.95);
+            backdrop-filter: blur(15px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+            height: 180px; /* Significantly increased height for large logo */
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            height: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-img {
+            width: 150px;
+            height: 150px;
+            background: transparent;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: none;
+        }
+
+        .logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 200px; /* Increased to accommodate taller header */
+            padding-bottom: 60px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 50px;
+            width: 100%;
+        }
+
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero h2 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            background: linear-gradient(45deg, #ffffff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 35px;
+            color: var(--light);
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 45px;
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 18px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.5);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 45px rgba(139, 92, 246, 0.7);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, var(--secondary), #059669);
+            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.5);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 18px 45px rgba(16, 185, 129, 0.7);
+        }
+
+        /* Player Placeholder */
+        .player-placeholder {
+            background: var(--glass);
+            border-radius: 25px;
+            padding: 25px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            aspect-ratio: 1/1;
+            min-width: 320px;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .player-placeholder h3 {
+            margin-bottom: 20px;
+            color: var(--light);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .player-placeholder .player-box {
+            background: rgba(0, 0, 0, 0.35);
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-style: italic;
+            font-size: 1.1rem;
+            padding: 25px;
+            border: 2px dashed rgba(139, 92, 246, 0.3);
+        }
+
+        /* Horizontal Banner Section */
+        .horizontal-banner {
+            padding: 30px 0;
+            margin: 35px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .horizontal-banner-container {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        .horizontal-banner-container img {
+            width: 100%;
+            height: 160px; /* Increased height */
+            object-fit: cover;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .horizontal-banner-container img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: var(--light);
+        }
+
+        .about-text p {
+            margin-bottom: 25px;
+            line-height: 1.7;
+            color: var(--light);
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .about-image {
+            flex: 1;
+            background: var(--glass);
+            border-radius: 25px;
+            padding: 25px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+        }
+
+        /* Programming Section */
+        .programming-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .program-card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .program-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.3);
+        }
+
+        .program-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+
+        .program-card .time {
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .program-card p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        /* Enlarged program banner */
+        .program-banner-large {
+            width: 100%;
+            height: 200px; /* Increased height significantly */
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-style: italic;
+            margin-top: 20px;
+            cursor: pointer;
+            border: 2px dashed rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .program-banner-large:hover {
+            background: rgba(0, 0, 0, 0.45);
+            transform: scale(1.02);
+        }
+
+        .program-banner-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .program-banner-large:hover img {
+            opacity: 1;
+        }
+
+        .program-banner-large .banner-placeholder {
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Chat Section */
+        .chat-container {
+            background: var(--glass);
+            border-radius: 25px;
+            padding: 35px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 850px;
+            margin: 0 auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .chat-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .username-setup {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .username-setup input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+            font-size: 17px;
+            outline: none;
+            font-weight: 600;
+        }
+
+        .username-setup input::placeholder {
+            color: var(--gray);
+        }
+
+        .username-setup button {
+            padding: 15px 25px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 17px;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .username-setup button:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .chat-messages {
+            height: 420px;
+            overflow-y: auto;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .message {
+            padding: 15px 20px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+            font-size: 16px;
+        }
+
+        .user-message {
+            background: var(--primary);
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .other-message {
+            background: rgba(255, 255, 255, 0.12);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .message-info {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 6px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 15px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            font-weight: 600;
+        }
+
+        .chat-input input::placeholder {
+            color: var(--gray);
+        }
+
+        .chat-input button {
+            padding: 16px 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 17px;
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .chat-input button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .chat-input button:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            text-align: center;
+        }
+
+        .contact-info {
+            max-width: 650px;
+            margin: 0 auto 50px;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 35px;
+            color: var(--light);
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            background: var(--glass);
+            padding: 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .contact-item i {
+            width: 55px;
+            height: 55px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .contact-item .info {
+            text-align: left;
+        }
+
+        .contact-item .info h4 {
+            margin-bottom: 8px;
+            color: var(--light);
+            font-size: 1.2rem;
+        }
+
+        .contact-item .info p {
+            color: var(--gray);
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .social-section {
+            background: var(--glass);
+            padding: 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 550px;
+            margin: 0 auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .social-section h3 {
+            margin-bottom: 25px;
+            color: var(--light);
+            font-size: 1.8rem;
+        }
+
+        .social-links-large {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .social-links-large a {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease, background 0.3s ease;
+            font-size: 28px;
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .social-links-large a:hover {
+            transform: translateY(-8px) scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 50px 0;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .logo-footer {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-footer-img {
+            width: 120px;
+            height: 120px;
+        }
+
+        .logo-footer-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-footer h1 {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .social-links a {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease, background 0.3s ease;
+            font-size: 22px;
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .social-links a:hover {
+            transform: translateY(-6px);
+            background: var(--primary-dark);
+        }
+
+        .copyright {
+            color: var(--gray);
+            font-size: 15px;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .logo-img {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .logo h1 {
+                font-size: 28px;
+            }
+            
+            header {
+                height: 160px;
+            }
+            
+            .hero {
+                padding-top: 180px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none !important;
+            }
+            
+            .mobile-menu-btn {
+                display: block !important;
+            }
+            
+            .logo-img {
+                width: 110px;
+                height: 110px;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            header {
+                height: 140px;
+            }
+            
+            .hero {
+                padding-top: 160px;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 50px;
+            }
+            
+            .hero-text {
+                max-width: 100%;
+            }
+            
+            .hero h2 {
+                font-size: 3.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .programs-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+            
+            section {
+                padding: 80px 0;
+            }
+            
+            .horizontal-banner-container img {
+                height: 140px;
+            }
+            
+            .logo-footer-img {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .logo-footer h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo-img {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .logo h1 {
+                font-size: 22px;
+            }
+            
+            header {
+                height: 120px;
+            }
+            
+            .hero {
+                padding-top: 140px;
+            }
+            
+            .hero h2 {
+                font-size: 2.6rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .player-placeholder {
+                min-width: 280px;
+                min-height: 280px;
+            }
+            
+            .programs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chat-messages {
+                height: 350px;
+            }
+            
+            .username-setup {
+                flex-direction: column;
+            }
+            
+            .contact-details {
+                gap: 20px;
+            }
+            
+            .social-links-large a {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .horizontal-banner-container img {
+                height: 120px;
+            }
+            
+            .logo-footer-img {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .logo-footer h1 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-img {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .logo h1 {
+                font-size: 20px;
+            }
+            
+            header {
+                height: 100px;
+            }
+            
+            .hero {
+                padding-top: 120px;
+            }
+            
+            .hero h2 {
+                font-size: 2.1rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .btn {
+                padding: 12px 35px;
+                font-size: 16px;
+            }
+            
+            .section-header h2 {
+                font-size: 1.9rem;
+            }
+            
+            .player-placeholder {
+                min-width: 240px;
+                min-height: 240px;
+            }
+            
+            .player-placeholder h3 {
+                font-size: 1.1rem;
+            }
+            
+            .social-links-large {
+                gap: 20px;
+            }
+            
+            .social-links-large a {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            .nav-links a {
+                font-size: 16px;
+            }
+            
+            .about-text h3 {
+                font-size: 1.9rem;
+            }
+            
+            .contact-item i {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+            
+            .program-banner-large {
+                height: 160px;
+            }
+            
+            .horizontal-banner-container img {
+                height: 100px;
+            }
+            
+            .logo-footer-img {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-footer h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <div class="logo-img">
+                        <img src="img/logo.png" alt="MyRadioGT Logo">
+                    </div>
+                    
+                </div>
+                <div class="nav-links">
+                    <a href="#hero">Inicio</a>
+                    <a href="#about">Sobre Nosotros</a>
+                    <a href="#programming">Programación</a>
+                    <a href="#chat">Chat</a>
+                    <a href="#contact">Contacto</a>
+                </div>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <div class="hero-text">
+                    <h2>SONAMOS TU MÚSICA</h2>
+                    <p>Disfruta de la mejor experiencia musical en línea con MyRadioGT. Calidad de sonido premium y los mejores DJ's en vivo.</p>
+                    <a href="https://play.google.com/store/apps/details?id=com.syswhite.whiteradio&fbclid=IwZXh0bgNhZW0CMTAAAR2sitvdRhGp9dZJS0xTyHC7Nximfi8vw_6axZG-9YDsSAGN40zgsAKoOEY_aem_zGzJEb58iLPA0dssIbLiTg" target="_blank" class="btn">Escuchanos en nuestra app</a>
+                </div>
+                <div class="player-placeholder">
+                    <h3>Reproductor de Radio en Vivo</h3>
+                    <div class="player-box">
+                        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script><script src="https://cdn.mexiserver.com/html5players/4/js/player4-mexiserver.js"></script><div id="mexiserver" style="width:410px; height:445px;"></div><script> $("#mexiserver").lunaradio({ streamurl: "https://stream3.mexiserver.com:10036/;stream.mp3", radioname: "MyRadioGT Online", coverimage: "https://static.mytuner.mobi/media/tvos_radios/AZd7J5XqLC.jpg", onlycoverimage: false, userinterface: "big", backgroundcolor: "#0e1015", fontcolor: "#ffffff", hightlightcolor: "#e7433c", fontname: "Saira Condensed", googlefont: "Saira+Condensed:wght@100", fontratio: "0.4", scroll: "true", coverstyle: "animated", usevisualizer: "real", visualizertype: "5", streamtype: "shoutcast2", shoutcastpath: "/stream", shoutcastid: "1", metadatainterval: "5000", volume: "100", usestreamcorsproxy: "true", }); </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner 1 - After Hero -->
+    <div class="horizontal-banner">
+        <div class="horizontal-banner-container">
+            <img src="banner/1.png" alt="Banner Publicitario 1">
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>Sobre Nosotros</h2>
+                <p>Conoce nuestra historia y misión</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>La Voz de la Música en Línea</h3>
+                    <p>MyRadioGT Online nacio con el fin de llevar una programación de calidad con la cual la audiencia pudiera identificarse. </p>
+                    <p>Teniendo al frente a una persona con conocimientos amplios en musica y que conoce de primera mano todo lo que a la gente le gusta, MyRadioGT Online se caracteriza por ofrecer a la audiencia una seleccion precisa de música basado en años de experiencia en un mercado tan competitivo como lo es el musical. </p>
+                    <a href="#" class="btn btn-secondary">Conoce a Nuestro Equipo</a>
+                </div>
+                <div class="about-image">
+                    <img src="img/about.jpg" alt="Estudio MyRadioGT">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner 2 - After About -->
+    <div class="horizontal-banner">
+        <div class="horizontal-banner-container">
+            <img src="banner/2.gif" alt="Banner Publicitario 2">
+        </div>
+    </div>
+
+    <!-- Programming Section -->
+    <section id="programming">
+        <div class="container">
+            <div class="section-header">
+                <h2>Programación</h2>
+                <p>Descubre nuestros programas en vivo</p>
+            </div>
+            <div class="programming-section">
+                <div class="programs-grid">
+                    <div class="program-card">
+                        <h3>La Onda Grupera</h3>
+                        <span class="time">Lunes a Viernes 5:30 a 9:30 Hrs.</span>
+                        <p>Comienza tu dia la mejor musica grupera.</p>
+                        <div class="program-banner-large">
+                            <img src="img/programas/La Onda.png" alt="Banner El Despertador Musical">
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <h3>El PlayList</h3>
+                        <span class="time">Lunes, Martes y Jueves 9:30 a 20:00 Hrs.</span>
+                        <p>La Mejor Seleccion Musical para acompañarte en tu jornada diaria.</p>
+                        <div class="program-banner-large">
+                            <img src="img/programas/el.png" alt="Banner Ritmo y Sabor">
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <h3>Latidos y Suspriros</h3>
+                        <span class="time">Lunes a Viernes de 20:00 a 5:30 Hrs</span>
+                        <p>Tus Noches convertidas en veladas romanticas y llenas de emociones.</p>
+                        <div class="program-banner-large">
+                            <img src="img/programas/Latidos.png" alt="Banner Noche de Estrellas">
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <h3>Retro Hits</h3>
+                        <span class="time">Miercoles 9:30 a 20:00Hrs</span>
+                        <p>Los Exitos de Ayer, Suenan Hoy. Vuelve a los tiempos que definieron la música.</p>
+                        <div class="program-banner-large">
+                            <img src="img/programas/retro.png" alt="Banner Éxitos del Recuerdo">
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <h3>Es Hora de Banda</h3>
+                        <span class="time">Domingos 15:00 a 18:00 Hrs.</span>
+                        <p>La Mejor Musica Banda para acompañar tus tardes de domingo.</p>
+                        <div class="program-banner-large">
+                            <img src="img/programas/Diseño sin título.png" alt="Banner Top 40 Internacional">
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <h3>Rumba MIX</h3>
+                        <span class="time">Viernes y Sabado 9:30 a 20:00 Hrs.</span>
+                        <p>La Fiesta empieza en la Radio, somos los expertos en iniciar la pachanga.</p>
+                        <div class="program-banner-large">
+                            <img src="img/programas/Rumba.png" alt="Banner Reggaetón Caliente">
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <h3>PROXIMAMENTE</h3>
+                        <span class="time">UN NUEVO PROGRAMA PARA TI</span>
+                        <p>Esperalo...</p>
+                        <div class="program-banner-large">
+                            <img src="https://placehold.co/320x200/6366F1/FFFFFF?text=PROXIMAMENTE" alt="Banner Clásicos Rockeros">
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <h3>Salsa y Merengue</h3>
+                        <span class="time">12:00 AM - 2:00 AM</span>
+                        <p>La mejor música tropical para cerrar la noche. DJ Carmen te lleva en un viaje por los ritmos más calientes del Caribe.</p>
+                        <div class="program-banner-large">
+                            <img src="https://placehold.co/320x200/EC4899/FFFFFF?text=PROXIMAMENTE" alt="Banner Salsa y Merengue">
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <h3>Mix de Éxitos</h3>
+                        <span class="time">2:00 AM - 6:00 AM</span>
+                        <p>Una selección especial de todos los géneros para los noctámbulos. DJ Pablo mantiene viva la fiesta hasta el amanecer.</p>
+                        <div class="program-banner-large">
+                            <img src="https://placehold.co/320x200/14B8A6/FFFFFF?text=PROXIMAMENTE" alt="Banner Mix de Éxitos">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner 3 - After Programming -->
+    <div class="horizontal-banner">
+        <div class="horizontal-banner-container">
+            <img src="banner/3.png" alt="Banner Publicitario 3">
+        </div>
+    </div>
+
+    <!-- Chat Section -->
+    <section id="chat">
+        <div class="container">
+            <div class="section-header">
+                <h2>Sala de Chat</h2>
+                <p>Únete a la conversación en vivo con otros oyentes</p>
+            </div>
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="username-setup">
+                        <input type="text" id="usernameInput" placeholder="Ingresa tu nombre o nickname" maxlength="20">
+                        <button onclick="setUsername()">Establecer Nick</button>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message other-message">
+                        ¡Hola a todos! ¿Qué música les gustaría escuchar hoy?
+                        <div class="message-info">DJ Alex</div>
+                    </div>
+                    <div class="message other-message">
+                        Bienvenidos a MyRadioGT Online, la radio que sona tu música favorita!
+                        <div class="message-info">Sistema</div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="messageInput" placeholder="Escribe tu mensaje..." disabled>
+                    <button onclick="sendMessage()" disabled>Enviar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner 4 - After Chat -->
+    <div class="horizontal-banner">
+        <div class="horizontal-banner-container">
+            <img src="banner/4.gif" alt="Banner Publicitario 4">
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contacto</h2>
+                <p>Ponte en contacto con nosotros</p>
+            </div>
+            <div class="contact-section">
+                <div class="contact-info">
+                    <h3>Información de Contacto</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="info">
+                                <h4>Dirección</h4>
+                                <p>Ciudad de Mixco, Guatemala</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div class="info">
+                                <h4>Teléfono/WhatsApp</h4>
+                                <p>+502 56535205</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div class="info">
+                                <h4>Email</h4>
+                                <p>myradiogt@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div class="info">
+                                <h4>Horario</h4>
+                                <p>Siempre en Vivo 24/7</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-section">
+                    <h3>Síguenos en Redes Sociales</h3>
+                    <div class="social-links-large">
+                        <a href="https://www.facebook.com/myradiogtmusica"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/myradiogt/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/+5025653520"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.youtube.com/@myradiogt"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@myradiogtmusic2026"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner 5 - Before Footer -->
+    <div class="horizontal-banner">
+        <div class="horizontal-banner-container">
+            <img src="banner/5.gif" alt="Banner Publicitario 5">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo-footer">
+                    <div class="logo-footer-img">
+                        <img src="img/logo.png" alt="MyRadioGT Logo">
+                    </div>
+                    <h1>MyRadioGT Online</h1>
+                </div>
+                <p>Sonamos tu música</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/myradiogtmusica"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/myradiogt/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/+5025653520"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.youtube.com/@myradiogt"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@myradiogtmusic2026"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="copyright">
+                    &copy; 2026 MyRadioGT Online. Todos los derechos reservados.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // User management for chat
+        let currentUser = null;
+        const usernameInput = document.getElementById('usernameInput');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.querySelector('.chat-input button');
+
+        // Set username function
+        function setUsername() {
+            const username = usernameInput.value.trim();
+            if (username && username.length >= 2) {
+                currentUser = username;
+                usernameInput.disabled = true;
+                messageInput.disabled = false;
+                sendButton.disabled = false;
+                messageInput.placeholder = `Escribe tu mensaje como ${username}...`;
+                messageInput.focus();
+                
+                // Add system message
+                addSystemMessage(`${username} se ha unido al chat!`);
+            } else {
+                alert('Por favor ingresa un nombre válido (mínimo 2 caracteres)');
+            }
+        }
+
+        // Add system message
+        function addSystemMessage(text) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message other-message';
+            messageElement.innerHTML = `
+                ${text}
+                <div class="message-info">Sistema</div>
+            `;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Chat functionality
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            
+            if (message && currentUser) {
+                const chatMessages = document.getElementById('chatMessages');
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message user-message';
+                messageElement.innerHTML = `
+                    ${message}
+                    <div class="message-info">${currentUser}</div>
+                `;
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                messageInput.value = '';
+            }
+        }
+
+        // Allow sending message with Enter key
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Allow setting username with Enter key
+        usernameInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                setUsername();
+            }
+        });
+
+        // Smooth scrolling for navigation links with proper offset for taller header
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 190; // Adjusted for taller header
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Dynamic background elements
+        function createBackgroundElements() {
+            const body = document.querySelector('body');
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.style.position = 'absolute';
+                element.style.width = Math.random() * 100 + 'px';
+                element.style.height = element.style.width;
+                element.style.background = `rgba(${Math.random() > 0.5 ? '139, 92, 246' : '16, 185, 129'}, ${Math.random() * 0.1})`;
+                element.style.borderRadius = '50%';
+                element.style.top = Math.random() * 100 + '%';
+                element.style.left = Math.random() * 100 + '%';
+                element.style.zIndex = '-1';
+                element.style.opacity = Math.random() * 0.3;
+                body.appendChild(element);
+            }
+        }
+
+        // Initialize background elements
+        createBackgroundElements();
+
+        // Mobile menu toggle - Fixed version
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        // Initialize mobile menu state
+        function updateMobileMenu() {
+            if (window.innerWidth <= 992) {
+                navLinks.style.display = 'none';
+                mobileMenuBtn.style.display = 'block';
+            } else {
+                navLinks.style.display = 'flex';
+                mobileMenuBtn.style.display = 'none';
+            }
+        }
+
+        // Initial check
+        updateMobileMenu();
+
+        // Mobile menu toggle functionality
+        mobileMenuBtn.addEventListener('click', function() {
+            if (navLinks.style.display === 'none' || navLinks.style.display === '') {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '180px'; // Match header height
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'rgba(31, 41, 55, 0.98)';
+                navLinks.style.backdropFilter = 'blur(15px)';
+                navLinks.style.padding = '25px';
+                navLinks.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.3)';
+                navLinks.style.zIndex = '999';
+            } else {
+                navLinks.style.display = 'none';
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', updateMobileMenu);
+    </script>
+</body>
+</html>
+
