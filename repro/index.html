@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>MyRadioGT</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+<style>
+ 
+  #lunaradio {
+    width:495px;
+    height:495px; /* Ajusta la altura según sea necesario */
+    margin-top: 0px; /* Ajusta la distancia desde arriba según sea necesario */
+  }
+</style>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/lunaradio.js"></script>
+<script src="js/lunaradio.min.js"></script>
+</head>
+
+<body>
+<div id="lunaradio"></div>
+
+<script>
+  $(document).ready(function(){
+    $("#lunaradio").lunaradio({
+      userinterface: "big",
+      backgroundcolor: "#141414",
+      fontcolor: "#FF0015",
+      hightlightcolor: "#FDFEFE",
+      fontname: "Saira Condensed",
+      googlefont: "Saira+Condensed:wght@100",
+      fontratio: "0.3",
+      radioname: "MyRadioGT Online",
+      radiotitle: "Sonamos Tu Musica!!!",
+      scroll: "true",
+      coverimage: "img/logo.jpg",
+      usevisualizer: "real",
+      coverstyle: "animated",
+      visualizertype: "2",
+      multicolorvisualizer: "true",
+      color1: "#fe9797",
+      color2: "#fe9797",
+      color3: "#fe9797",
+      color4: "#fe9797",
+      itunestoken: "1000lIPN",
+      metadatatechnic: "ownmetadataurl",
+      ownmetadataurl: "https://stream3.mexiserver.com:10036/currentsong?sid=1.txt",
+      streamurl: "https://stream3.mexiserver.com:10036/",
+      streamtype: "shoutcast2", 
+      icecastmountpoint: "",
+      radionomyid: "",
+      radionomyapikey: "",
+      radiozenoid: "",
+      radiojarid: "",
+      radiocoid: "",
+      shoutcastpath: "/live",
+      shoutcastid: "1",
+      streamsuffix: "",
+      metadatainterval: "20000",
+      volume: "100",
+      debug: "false",
+      usestreamcorsproxy: "false", 
+      corsproxy: "",
+      autoplay: "true",
+    });
+  });
+</script>
+<script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js" data-cf-settings="3bc5e4e5245e387f3290c38f-|49" defer=""></script>
+</body>
+</html>
